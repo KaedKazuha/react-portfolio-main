@@ -1,0 +1,17 @@
+:root {
+  /* Raiden Shogun Inspired Color Palette */
+  --color-text: #d7abe4;
+  --color-primary: #3e2465;
+  --color-secondary: #4c2e85;
+  --color-accent: #a663cc;
+  --color-dark: #1b1134;
+  --color-bg: #120824;
+
+  /* Fonts */
+  --font-primary: "Poppins", sans-serif;
+}
+
+/* Apply the font globally */
+body, html {
+  font-family: var(--font-primary);
+}

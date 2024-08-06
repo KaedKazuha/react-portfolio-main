@@ -1,0 +1,39 @@
+[
+  {
+    "role": "Software Engineer Trainee",
+    "organisation": "7G Fuse",
+    "startDate": "Feb, 2024",
+    "endDate": "April, 2024",
+    "experiences": [
+      "Learning C++ in a Linux environment using g++ compiler.",
+      "Writing practical and efficient C++ code divided with header files.",
+      "Using version control methods to work as a team and improve our code.",
+      "Debugging tools for checking errors and memory leaks using tools such as Valgrind.",
+      "Implementing Unit testing and assertion methods with the help of GTest for robust and reliable code.",
+      "Using CMake and Make to create Makefiles allowing us to compile and test code easily.",
+      "Developing programs and projects based on OOP and publishing shared libraries of our code.",
+      "Making projects such as Calendar App, File text Editor, IP Address validation, and subnet calculator following DRY principles.",
+      "Using Drogon Framework to implement MVC architecture for the backend of the web application.",
+      "Implementation of KnockoutJS, a JavaScript-based MVVM architecture for front-end of the web application.",
+      "Using Inja, a C++ template engine for displaying dynamic data.",
+      "Cache server based on Redis Plus Plus library for C++.",
+      "Using Jquery for fetching JSON data and DOM manipulation.",
+      "Using Bootstrap for a responsive and stable web application."
+      
+    ],
+    "imageSrc": "history/7g.png"
+  },
+  {
+    "role": "Android Developer Intern",
+    "organisation": "TCS Pvt Ltd",
+    "startDate": "Jul, 2022",
+    "endDate": "Aug, 2022",
+    "experiences": ["Learnt essential amounts of Java and its syntax using tutorials and documentation.",
+      "Implemented related concepts along with polished OOP concepts in Android Studio to create simple applications.",
+      "Worked on implementations such as RecyclerView, Retrofit, and utilizing REST-API.",
+      "Gained insights on business practices alongside technologies and skills involved in running an application."
+
+    ],
+    "imageSrc": "history/tcs.png"
+  }
+]

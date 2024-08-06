@@ -1,0 +1,11 @@
+[
+  {
+    "title": "Personal Protective Equipment Detection using YOLOv8",
+    "imageSrc": "projects/PPE.jpg",
+    "description": "The project detects the presence of personal protective equipment on individuals in various settings to identify whether a person is wearing appropriate PPE, including items like helmets, masks, and safety vests.",
+    "skills": ["Python", "Express", "Node"],
+    "demo": "https://www.example.com",
+    "source": "https://www.github.com"
+  }
+  
+]
