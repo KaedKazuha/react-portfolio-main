@@ -1,5 +1,4 @@
 import React from "react";
-
 import styles from "./ProjectCard.module.css";
 import { getImageUrl } from "../../utils";
 
@@ -16,21 +15,18 @@ export const ProjectCard = ({
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.description}>{description}</p>
       <ul className={styles.skills}>
-        {skills.map((skill, id) => {
-          return (
-            <div className={styles.skillContainer}>
-            <li key={id} className={styles.skill}>
-              {skill}
-            </li>
-            </div>
-          );
-        })}
+        {skills.map((skill, id) => (
+          <div key={id} className={styles.skillContainer}>
+            <li className={styles.skill}>{skill}</li>
+          </div>
+        ))}
       </ul>
       <div className={styles.links}>
+        {/* Uncomment if you want to include a demo link */}
         {/* <a href={demo} className={styles.link}>
           Demo
         </a> */}
-        <a href={"https://github.com/KaedKazuha/Personal-Protective-Equipment-Detection-Yolov8"} className={styles.link}>
+        <a href={source} className={styles.link}>
           Link
         </a>
       </div>

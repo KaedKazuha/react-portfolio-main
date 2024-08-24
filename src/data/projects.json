@@ -1,11 +1,27 @@
 [
   {
     "title": "Personal Protective Equipment Detection using YOLOv8",
-    "imageSrc": "projects/PPE.jpg",
+    "imageSrc": "projects/PPE1.jpg",
     "description": "The project detects the presence of personal protective equipment on individuals in various settings to identify whether a person is wearing appropriate PPE, including items like helmets, masks, and safety vests.",
-    "skills": ["Python", "Express", "Node"],
+    "skills": ["Python", "Flask", "Node"],
     "demo": "https://www.example.com",
-    "source": "https://www.github.com"
+    "source": "https://github.com/KaedKazuha/Personal-Protective-Equipment-Detection-Yolov8"
+  },
+    {
+    "title": "Full-Stack ML Web Application for Car Price Prediction",
+    "imageSrc": "projects/carprice.png",
+    "description": "Car Price Prediction application that uses a machine learning model to predict car prices based on various features such as make, model, year, mileage, engine capacity, fuel type, transmission, and location.",
+    "skills": ["Python", "Flask", "Node", "React"],
+    "demo": "https://www.example.com",
+    "source": "https://github.com/KaedKazuha/UsedCarPricesPredictionPW"
+  },
+  {
+    "title": "Dashboard Frontend for CarWebsite",
+    "imageSrc": "projects/Dashboard.png",
+    "description": "A Frontend Project in React for a complete website that has buying and selling of used cars alongside car price prediction and statistics over time. Styled using MUI Material-UI Template.",
+    "skills": ["Python","Node", "React"],
+    "demo": "https://www.example.com",
+    "source": "https://github.com/KaedKazuha/Dashboard-Frontend-CarSolutions/blob/main/README.md"
   }
   
 ]

@@ -8,14 +8,14 @@ export const Hero = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>Anas Arif</h1>
         <p className={styles.description}>
-          Aspiring Data Science and Artificial Intelligence Enthusiast.
+          Data Science and Full-Stack Developer.
         </p>
         <div className={styles.buttonContainer}>
 
         <a href="mailto:anasarif82@gmail.com" className={styles.contactBtn}>
           Contact Me
         </a>
-        <a href="assets/about/AnasArifCV.pdf" download className={styles.downloadBtn}>
+        <a href="https://raw.githubusercontent.com/KaedKazuha/react-portfolio-main/main/assets/about/AnasArifCV.pdf" download className={styles.downloadBtn}>
           Download CV
         </a>
         </div>
