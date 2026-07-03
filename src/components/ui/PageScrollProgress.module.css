@@ -1,0 +1,29 @@
+.track {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 200;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.bar {
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    var(--color-pink),
+    var(--color-fuchsia),
+    var(--color-violet),
+    var(--color-indigo)
+  );
+  box-shadow: 0 0 12px rgba(244, 114, 182, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    display: none;
+  }
+}

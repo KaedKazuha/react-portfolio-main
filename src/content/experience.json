@@ -1,0 +1,77 @@
+[
+
+  {
+
+    "role": "Job Title",
+
+    "company": "Company Name",
+
+    "startDate": "2024",
+
+    "endDate": "Present",
+
+    "location": "City · Remote",
+
+    "logo": "history/7g.png",
+
+    "highlights": [
+
+      "Describe a key accomplishment or responsibility — impact, metrics, or scope.",
+
+      "Another bullet: tech used, team size, or problem you solved.",
+
+      "Optional third bullet for extra detail."
+
+    ]
+
+  },
+
+  {
+
+    "role": "Previous Role",
+
+    "company": "Previous Company",
+
+    "startDate": "2022",
+
+    "endDate": "2024",
+
+    "location": "City",
+
+    "logo": "history/tcs.png",
+
+    "highlights": [
+
+      "What you owned or shipped in this role.",
+
+      "Skills or stack you used day to day."
+
+    ]
+
+  },
+
+  {
+
+    "role": "Intern / Junior Role",
+
+    "company": "Earlier Company",
+
+    "startDate": "2021",
+
+    "endDate": "2022",
+
+    "location": "City",
+
+    "logo": "history/microsoft.png",
+
+    "highlights": [
+
+      "Early career highlight or learning experience."
+
+    ]
+
+  }
+
+]
+
+

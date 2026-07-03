@@ -1,0 +1,71 @@
+:root {
+  --color-bg: #0c0614;
+  --color-bg-elevated: #140a1c;
+  --color-surface: #1c1028;
+  --color-surface-hover: #271535;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  --color-text: #faf5ff;
+  --color-text-muted: #b8a4c4;
+  --color-text-subtle: #8b7699;
+
+  /* Pink → fuchsia → violet → soft indigo */
+  --color-pink: #f472b6;
+  --color-fuchsia: #e879f9;
+  --color-violet: #a78bfa;
+  --color-indigo: #818cf8;
+
+  --color-accent: #e879f9;
+  --color-accent-soft: #f0abfc;
+  --color-accent-deep: #a21caf;
+  --color-accent-glow: rgba(232, 121, 249, 0.32);
+  --color-accent-muted: #d946ef;
+  --color-accent-surface: rgba(244, 114, 182, 0.1);
+  --color-accent-border: rgba(232, 121, 249, 0.28);
+
+  --color-gradient: linear-gradient(
+    135deg,
+    #fda4af 0%,
+    #f472b6 18%,
+    #e879f9 42%,
+    #a78bfa 68%,
+    #818cf8 100%
+  );
+  --color-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(244, 114, 182, 0.14),
+    rgba(167, 139, 250, 0.1),
+    rgba(129, 140, 248, 0.08)
+  );
+
+  /* Embroidery + particle palette — pink-white & whitish-blue threads */
+  --embro-pink-white: rgba(253, 242, 248, 0.72);
+  --embro-rose-white: rgba(255, 241, 242, 0.65);
+  --embro-pink-thread: rgba(251, 207, 232, 0.58);
+  --embro-rose-thread: rgba(253, 164, 175, 0.62);
+  --embro-fuchsia-thread: rgba(245, 208, 254, 0.52);
+  --embro-violet-thread: rgba(221, 214, 254, 0.5);
+  --embro-blue-white: rgba(224, 231, 255, 0.58);
+  --embro-indigo-thread: rgba(199, 210, 254, 0.55);
+  --embro-sky-thread: rgba(238, 242, 255, 0.48);
+  --embro-fill-pink: rgba(253, 242, 248, 0.22);
+  --embro-fill-blue: rgba(224, 231, 255, 0.18);
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+
+  --shadow-sm: 0 4px 24px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 60px var(--color-accent-glow);
+
+  --nav-height: 72px;
+  --section-gap: clamp(5rem, 10vw, 8rem);
+  --container-max: 1140px;
+  --container-padding: clamp(1.25rem, 4vw, 2rem);
+}

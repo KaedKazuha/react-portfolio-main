@@ -1,0 +1,35 @@
+[
+  {
+    "category": "Frontend",
+    "items": [
+      { "name": "React", "icon": "skills/react.png" },
+      { "name": "HTML", "icon": "skills/html.png" },
+      { "name": "CSS", "icon": "skills/css.png" },
+      { "name": "TypeScript" }
+    ]
+  },
+  {
+    "category": "Backend",
+    "items": [
+      { "name": "Node.js", "icon": "skills/node.png" },
+      { "name": "Python", "icon": "skills/Python.png" },
+      { "name": "GraphQL", "icon": "skills/graphql.png" },
+      { "name": "MongoDB", "icon": "skills/mongodb.png" }
+    ]
+  },
+  {
+    "category": "Languages",
+    "items": [
+      { "name": "C++", "icon": "skills/C++.png" },
+      { "name": "Python", "icon": "skills/Python.png" }
+    ]
+  },
+  {
+    "category": "Design & Tools",
+    "items": [
+      { "name": "Figma", "icon": "skills/figma.png" },
+      { "name": "Git" },
+      { "name": "Docker" }
+    ]
+  }
+]

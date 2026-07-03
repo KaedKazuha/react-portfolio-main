@@ -1,0 +1,45 @@
+.header {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  max-width: 640px;
+}
+
+.labelWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-soft);
+}
+
+.labelLine {
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--color-pink), var(--color-indigo));
+  border-radius: 999px;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}

@@ -1,20 +1,33 @@
+import { useRef } from "react";
+import { InteractiveEmbroidery } from "./components/effects/InteractiveEmbroidery";
+import { Navbar } from "./components/layout/Navbar";
+import { Hero } from "./components/sections/Hero";
+import { About } from "./components/sections/About";
+import { Skills } from "./components/sections/Skills";
+import { Experience } from "./components/sections/Experience";
+import { Projects } from "./components/sections/Projects";
+import { Contact } from "./components/sections/Contact";
+import { PageScrollProgress } from "./components/ui/PageScrollProgress";
 import styles from "./App.module.css";
-import { About } from "./components/About/About";
-import { Contact } from "./components/Contact/Contact";
-import { Experience } from "./components/Experience/Experience";
-import { Hero } from "./components/Hero/Hero";
-import { Navbar } from "./components/Navbar/Navbar";
-import { Projects } from "./components/Projects/Projects";
 
 function App() {
+  const pageRef = useRef(null);
+
   return (
-    <div className={styles.App}>
-      <Navbar />
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Contact />
+    <div ref={pageRef} className={styles.page}>
+      <PageScrollProgress />
+      <div className={styles.content}>
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+        </main>
+        <Contact />
+      </div>
+      <InteractiveEmbroidery pageRef={pageRef} />
     </div>
   );
 }

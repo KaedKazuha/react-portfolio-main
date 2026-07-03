@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Featured Project Name",
+    "description": "One-line pitch: what it does, who it's for, and why it matters. Add tech or outcome if you have it.",
+    "tags": ["React", "Node.js", "MongoDB"],
+    "featured": true,
+    "liveUrl": null,
+    "sourceUrl": null,
+    "image": "projects/PPE1.jpg"
+  },
+  {
+    "title": "Second Project",
+    "description": "Brief description. Replace with a real project — app, tool, open source, or client work.",
+    "tags": ["Python", "GraphQL", "Docker"],
+    "featured": false,
+    "liveUrl": null,
+    "sourceUrl": null,
+    "image": "projects/carprice.png"
+  },
+  {
+    "title": "Third Project",
+    "description": "Another placeholder project card. Link demo and repo when ready.",
+    "tags": ["React", "HTML", "CSS"],
+    "featured": false,
+    "liveUrl": null,
+    "sourceUrl": null,
+    "image": "projects/Dashboard.png"
+  },
+  {
+    "title": "Side Project or Experiment",
+    "description": "Smaller experiments, hackathons, or learning projects fit here too.",
+    "tags": ["React", "Python", "Figma"],
+    "featured": false,
+    "liveUrl": null,
+    "sourceUrl": null,
+    "image": "projects/PPE.jpg"
+  }
+]

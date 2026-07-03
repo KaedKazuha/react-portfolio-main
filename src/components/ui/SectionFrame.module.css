@@ -1,0 +1,64 @@
+.frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+.toneHero .glow {
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 20%, rgba(244, 114, 182, 0.07), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 80% 30%, rgba(129, 140, 248, 0.06), transparent 55%);
+}
+
+.toneRose .glow {
+  background:
+    radial-gradient(ellipse 75% 55% at 15% 40%, rgba(253, 242, 248, 0.07), transparent 58%),
+    radial-gradient(ellipse 65% 50% at 85% 60%, rgba(244, 114, 182, 0.05), transparent 55%);
+}
+
+.toneFuchsia .glow {
+  background:
+    radial-gradient(ellipse 80% 60% at 80% 35%, rgba(245, 208, 254, 0.07), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 20% 70%, rgba(232, 121, 249, 0.05), transparent 55%);
+}
+
+.toneViolet .glow {
+  background:
+    radial-gradient(ellipse 75% 55% at 25% 50%, rgba(221, 214, 254, 0.07), transparent 58%),
+    radial-gradient(ellipse 65% 50% at 75% 30%, rgba(167, 139, 250, 0.05), transparent 55%);
+}
+
+.toneIndigo .glow {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 45%, rgba(224, 231, 255, 0.07), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 30% 65%, rgba(129, 140, 248, 0.05), transparent 55%);
+}
+
+.toneContact .glow {
+  background:
+    radial-gradient(ellipse 90% 65% at 50% 80%, rgba(253, 242, 248, 0.06), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 10% 40%, rgba(199, 210, 254, 0.05), transparent 55%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .glow {
+    opacity: 1 !important;
+  }
+}

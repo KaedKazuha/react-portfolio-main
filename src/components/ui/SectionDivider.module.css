@@ -1,0 +1,24 @@
+.wrap {
+  width: min(100% - var(--container-padding) * 2, var(--container-max));
+  margin: 0 auto;
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  opacity: 0.85;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 32px;
+}
+
+.knot {
+  fill: rgba(253, 242, 248, 0.75);
+  stroke: rgba(199, 210, 254, 0.6);
+  stroke-width: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap {
+    opacity: 0.5;
+  }
+}
