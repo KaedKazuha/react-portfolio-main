@@ -4,29 +4,29 @@
     "items": [
       { "name": "React", "icon": "skills/react.png" },
       { "name": "HTML", "icon": "skills/html.png" },
-      { "name": "CSS", "icon": "skills/css.png" },
-      { "name": "TypeScript" }
+      { "name": "CSS", "icon": "skills/css.png" }
+    ]
+  },
+  {
+    "category": "Mobile",
+    "items": [
+      { "name": "React Native", "icon": "skills/react.png" },
+      { "name": "Expo", "icon": "skills/react.png" }
     ]
   },
   {
     "category": "Backend",
     "items": [
-      { "name": "Node.js", "icon": "skills/node.png" },
       { "name": "Python", "icon": "skills/Python.png" },
-      { "name": "GraphQL", "icon": "skills/graphql.png" },
-      { "name": "MongoDB", "icon": "skills/mongodb.png" }
+      { "name": "Flask", "icon": "skills/Python.png" },
+      { "name": "PostgreSQL", "icon": "skills/mongodb.png" }
     ]
   },
   {
-    "category": "Languages",
+    "category": "Languages & Tools",
     "items": [
       { "name": "C++", "icon": "skills/C++.png" },
-      { "name": "Python", "icon": "skills/Python.png" }
-    ]
-  },
-  {
-    "category": "Design & Tools",
-    "items": [
+      { "name": "Java" },
       { "name": "Figma", "icon": "skills/figma.png" },
       { "name": "Git" },
       { "name": "Docker" }

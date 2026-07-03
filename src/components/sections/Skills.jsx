@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { site, skills } from "../../content";
 import { normalizeSkillItem } from "../../lib/skillIcons";
 import { SectionHeader } from "../ui/SectionHeader";
@@ -9,12 +10,48 @@ import styles from "./Skills.module.css";
 
 export function Skills() {
   const { skills: section } = site.sections;
+  const reduceMotion = useReducedMotion();
+  const marqueeWrapRef = useRef(null);
+  const marqueeTrackRef = useRef(null);
+  const [marqueeAnimated, setMarqueeAnimated] = useState(false);
+
   const allSkills = skills.flatMap((group) =>
     group.items.map((item) => normalizeSkillItem(item))
   );
   const uniqueSkills = [
     ...new Map(allSkills.map((skill) => [skill.name, skill])).values(),
   ];
+
+  useEffect(() => {
+    const wrap = marqueeWrapRef.current;
+    const track = marqueeTrackRef.current;
+    if (!wrap || !track) return;
+
+    const updateMarqueeMode = () => {
+      const needsScroll = track.scrollWidth > wrap.clientWidth + 8;
+      setMarqueeAnimated(needsScroll);
+    };
+
+    updateMarqueeMode();
+
+    const observer = new ResizeObserver(updateMarqueeMode);
+    observer.observe(wrap);
+    observer.observe(track);
+
+    return () => observer.disconnect();
+  }, [uniqueSkills.length]);
+
+  const marqueeIcons = uniqueSkills.map((skill) => (
+    <div key={skill.name} className={styles.marqueeItem}>
+      <SkillIcon
+        name={skill.name}
+        icon={skill.icon}
+        size="sm"
+        showLabel={false}
+        className={styles.marqueeIcon}
+      />
+    </div>
+  ));
 
   return (
     <SectionFrame id="skills" tone="fuchsia">
@@ -60,23 +97,45 @@ export function Skills() {
           ))}
         </motion.div>
 
-        <div className={styles.marqueeWrap} aria-hidden="true">
+        <div
+          ref={marqueeWrapRef}
+          className={`${styles.marqueeWrap} ${marqueeAnimated ? styles.marqueeWrapAnimated : styles.marqueeWrapStatic}`}
+          aria-hidden="true"
+        >
           <motion.div
-            className={styles.marquee}
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+            ref={marqueeTrackRef}
+            className={`${styles.marquee} ${marqueeAnimated ? styles.marqueeAnimated : styles.marqueeStatic}`}
+            animate={
+              marqueeAnimated && !reduceMotion
+                ? { x: ["0%", "-50%"] }
+                : { x: 0 }
+            }
+            transition={
+              marqueeAnimated && !reduceMotion
+                ? { duration: Math.max(24, uniqueSkills.length * 3.5), repeat: Infinity, ease: "linear" }
+                : undefined
+            }
           >
-            {[...uniqueSkills, ...uniqueSkills].map((skill, i) => (
-              <div key={`${skill.name}-${i}`} className={styles.marqueeItem}>
-                <SkillIcon
-                  name={skill.name}
-                  icon={skill.icon}
-                  size="sm"
-                  showLabel={false}
-                  className={styles.marqueeIcon}
-                />
-              </div>
-            ))}
+            {marqueeAnimated ? (
+              <>
+                <div className={styles.marqueeGroup}>{marqueeIcons}</div>
+                <div className={styles.marqueeGroup} aria-hidden="true">
+                  {uniqueSkills.map((skill) => (
+                    <div key={`${skill.name}-clone`} className={styles.marqueeItem}>
+                      <SkillIcon
+                        name={skill.name}
+                        icon={skill.icon}
+                        size="sm"
+                        showLabel={false}
+                        className={styles.marqueeIcon}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              marqueeIcons
+            )}
           </motion.div>
         </div>
       </motion.div>

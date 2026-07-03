@@ -3,7 +3,6 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
   padding-top: var(--nav-height);
   padding-bottom: 4rem;
   overflow: hidden;
@@ -19,18 +18,41 @@
     radial-gradient(ellipse 60% 45% at 80% 30%, rgba(129, 140, 248, 0.06), transparent 55%);
 }
 
-.grid {
+.heroContent {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  align-items: center;
 }
 
 .content {
-  max-width: 580px;
+  max-width: 620px;
+}
+
+.portrait {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2.5rem;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.portraitFloat {
+  position: relative;
+  z-index: 1;
+}
+
+.portraitPhoto {
+  display: block;
+  width: clamp(240px, 58vw, 340px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  clip-path: circle(41% at 50% 46%);
+  filter: drop-shadow(0 28px 70px rgba(0, 0, 0, 0.42));
 }
 
 .badge {
@@ -88,14 +110,6 @@
   gap: 0.85rem;
 }
 
-.visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 320px;
-}
-
 .flourishLayer {
   position: absolute;
   inset: 0;
@@ -135,28 +149,6 @@
   pointer-events: none;
 }
 
-.imageGlow {
-  position: absolute;
-  width: min(100%, 380px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(244, 114, 182, 0.22) 0%,
-    rgba(129, 140, 248, 0.12) 45%,
-    transparent 70%
-  );
-  filter: blur(40px);
-}
-
-.imageFrame {
-  position: relative;
-  z-index: 1;
-  padding: 6px;
-  border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, rgba(244, 114, 182, 0.5), rgba(129, 140, 248, 0.4));
-}
-
 .location {
   display: inline-flex;
   align-items: center;
@@ -167,9 +159,9 @@
 }
 
 .stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 1.75rem);
   margin-top: 2.5rem;
   padding-top: 2rem;
   border-top: 1px solid var(--color-border);
@@ -180,6 +172,7 @@
   flex-direction: column;
   gap: 0.15rem;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .statIconWrap {
@@ -208,40 +201,59 @@
 .stats span {
   font-size: 0.8rem;
   color: var(--color-text-subtle);
-}
-
-.avatar {
-  width: min(100%, 320px);
-}
-
-.image {
-  width: min(100%, 340px);
-  border-radius: calc(var(--radius-xl) - 6px);
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-
-.orbit {
-  position: absolute;
-  width: min(90%, 400px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px dashed rgba(232, 121, 249, 0.2);
-  animation: spin 30s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  line-height: 1.45;
+  max-width: 100%;
+  white-space: normal;
+  text-wrap: balance;
 }
 
 @media (min-width: 900px) {
-  .grid {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 4rem;
+  .hero {
+    display: block;
+    min-height: 100vh;
   }
 
-  .visual {
-    min-height: 480px;
+  .heroContent {
+    min-height: calc(100vh - var(--nav-height) - 4rem);
+    display: flex;
+    align-items: center;
+  }
+
+  .content {
+    max-width: 560px;
+  }
+
+  .portrait {
+    position: absolute;
+    right: clamp(2rem, 6vw, 6rem);
+    top: 30%;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: auto;
+    margin: 0;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .portraitPhoto {
+    width: clamp(280px, 30vw, 400px);
   }
 }
+
+@media (min-width: 1200px) {
+  .portrait {
+    right: clamp(3rem, 7vw, 8rem);
+  }
+
+  .portraitPhoto {
+    width: clamp(300px, 32vw, 440px);
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+

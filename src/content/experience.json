@@ -1,77 +1,46 @@
 [
-
   {
-
-    "role": "Job Title",
-
-    "company": "Company Name",
-
-    "startDate": "2024",
-
+    "role": "Software Developer",
+    "company": "Fidelity Technologies",
+    "startDate": "Oct 2024",
     "endDate": "Present",
-
-    "location": "City · Remote",
-
+    "location": "Kuwait City, Kuwait",
+    "logo": "history/fidelity.png",
+    "websiteUrl": "https://fidelity-technologies.com/",
+    "highlights": [
+      "Built Tasleeh Core, a multi-platform SaaS operations system spanning a React web dashboard, Expo customer mobile app, and Expo technician field-service app.",
+      "Designed and developed the Fidelity Technologies marketing site — fidelity-technologies.com — showcasing the company's AI and automation solutions.",
+      "Implemented role-based access, multilingual RTL UI, real-time notifications via Centrifugo, secure JWT handling, and modular lazy-loaded route architecture.",
+      "Developed customer workflows for service requests, PAC, contracts, invoices, payments, wallet, statements, addresses, and technician tracking.",
+      "Built technician workflows for active jobs, geofence arrival, background location, checklists, proof capture, logistics handovers, and spare-parts requests.",
+      "Integrated mobile apps with Flask/PostgreSQL APIs, Firebase Messaging, Centrifugo WebSockets, secure storage, deep links, and EAS build pipelines."
+    ]
+  },
+  {
+    "role": "Jr. Full Stack Software Developer",
+    "company": "7g Fuse SMC Pvt Ltd",
+    "startDate": "Feb 2024",
+    "endDate": "Jun 2024",
+    "location": "Karachi, Pakistan",
     "logo": "history/7g.png",
-
     "highlights": [
-
-      "Describe a key accomplishment or responsibility — impact, metrics, or scope.",
-
-      "Another bullet: tech used, team size, or problem you solved.",
-
-      "Optional third bullet for extra detail."
-
+      "Built interactive web interfaces with the Drogon C++ framework, Knockout.js, Bootstrap, and jQuery.",
+      "Developed dynamic pages with the Inja template engine, integrating RESTful APIs and JSON payloads.",
+      "Delivered an internal reporting tool using MVC architecture, with unit testing via GTest and debugging with Valgrind.",
+      "Worked in a Linux environment with CMake, shared libraries, and object-oriented design practices."
     ]
-
   },
-
   {
-
-    "role": "Previous Role",
-
-    "company": "Previous Company",
-
-    "startDate": "2022",
-
-    "endDate": "2024",
-
-    "location": "City",
-
+    "role": "Intern — Android Development",
+    "company": "TCS Private Limited",
+    "startDate": "Jul 2022",
+    "endDate": "Sep 2022",
+    "location": "Karachi, Pakistan",
     "logo": "history/tcs.png",
-
     "highlights": [
-
-      "What you owned or shipped in this role.",
-
-      "Skills or stack you used day to day."
-
+      "Strengthened core Java and OOP fundamentals through self-directed learning and Android Studio practice.",
+      "Built basic Android apps using RecyclerView, Retrofit, and REST API integration.",
+      "Gained early exposure to professional software delivery workflows and business context."
     ]
-
-  },
-
-  {
-
-    "role": "Intern / Junior Role",
-
-    "company": "Earlier Company",
-
-    "startDate": "2021",
-
-    "endDate": "2022",
-
-    "location": "City",
-
-    "logo": "history/microsoft.png",
-
-    "highlights": [
-
-      "Early career highlight or learning experience."
-
-    ]
-
   }
-
 ]
-
-

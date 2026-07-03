@@ -1,38 +1,54 @@
 [
   {
-    "title": "Featured Project Name",
-    "description": "One-line pitch: what it does, who it's for, and why it matters. Add tech or outcome if you have it.",
-    "tags": ["React", "Node.js", "MongoDB"],
+    "title": "Tasleeh Core Webapp",
+    "description": "Operations dashboard for service companies — employee management, fleet, inventory, maintenance, contracts, logistics, invoices, payments, and real-time coordination across the Tasleeh ecosystem.",
+    "tags": ["React", "Vite", "Material UI", "Flask", "PostgreSQL"],
     "featured": true,
-    "liveUrl": null,
+    "liveUrl": "https://tasleeh.com",
+    "liveLabel": "Visit site",
     "sourceUrl": null,
+    "image": "projects/tasleeh_web.png",
+    "previewVideo": "projects/tasleeh_core_web.mp4"
+  },
+  {
+    "title": "Tasleeh Customer App",
+    "description": "Customer mobile app for service requests, PAC workflows, contracts, invoices, payments, wallet, technician tracking, and push notifications — with an AI assistant for in-app guidance.",
+    "tags": ["React Native", "Expo", "TanStack Query", "Firebase"],
+    "featured": false,
+    "liveUrl": "https://play.google.com/store/apps/details?id=com.tasleehcore.tasleeh",
+    "liveLabel": "Google Play",
+    "appStoreUrl": "https://apps.apple.com/kw/app/tasleeh-customers/id6757191119",
+    "sourceUrl": null,
+    "image": "projects/customer_app.jpeg",
+    "previewVideo": "projects/customer_app_preview.mp4"
+  },
+  {
+    "title": "Fidelity Technologies Website",
+    "description": "Marketing site for Fidelity Technologies — AI agents, automation services, and company portfolio. Designed and built end to end.",
+    "tags": ["React", "Vite", "Responsive Design"],
+    "featured": false,
+    "liveUrl": "https://fidelity-technologies.com/",
+    "liveLabel": "Visit site",
+    "sourceUrl": null,
+    "image": "projects/fidelity_web.png",
+    "imageFit": "contain"
+  },
+  {
+    "title": "Personal Protective Equipment Detection using YOLOv8",
+    "description": "Computer vision system that detects missing PPE on site using YOLOv8 — built for safety compliance in industrial environments.",
+    "tags": ["Python", "PyTorch", "Docker"],
+    "featured": false,
+    "liveUrl": null,
+    "sourceUrl": "https://github.com/KaedKazuha/Personal-Protective-Equipment-Detection-Yolov8",
     "image": "projects/PPE1.jpg"
   },
   {
-    "title": "Second Project",
-    "description": "Brief description. Replace with a real project — app, tool, open source, or client work.",
-    "tags": ["Python", "GraphQL", "Docker"],
+    "title": "Used Car Price Prediction",
+    "description": "Machine learning project predicting used car prices from vehicle features — built with Python and deployed as a web application.",
+    "tags": ["Python", "Flask", "Machine Learning"],
     "featured": false,
     "liveUrl": null,
-    "sourceUrl": null,
+    "sourceUrl": "https://github.com/KaedKazuha/UsedCarPricesPredictionPW",
     "image": "projects/carprice.png"
-  },
-  {
-    "title": "Third Project",
-    "description": "Another placeholder project card. Link demo and repo when ready.",
-    "tags": ["React", "HTML", "CSS"],
-    "featured": false,
-    "liveUrl": null,
-    "sourceUrl": null,
-    "image": "projects/Dashboard.png"
-  },
-  {
-    "title": "Side Project or Experiment",
-    "description": "Smaller experiments, hackathons, or learning projects fit here too.",
-    "tags": ["React", "Python", "Figma"],
-    "featured": false,
-    "liveUrl": null,
-    "sourceUrl": null,
-    "image": "projects/PPE.jpg"
   }
 ]

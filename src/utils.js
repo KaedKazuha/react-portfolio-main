@@ -1,7 +1,27 @@
-export const getImageUrl = (path) => {
+const assetModules = import.meta.glob("../assets/**/*", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+function normalizeAssetPath(path) {
+  return path.replace(/\\/g, "/").replace(/^\.\//, "");
+}
+
+export function getAssetUrl(path) {
   if (!path) return null;
-  return new URL(`../../assets/${path}`, import.meta.url).href;
-};
+
+  const normalized = normalizeAssetPath(path);
+  const moduleKey = `../assets/${normalized}`;
+
+  if (assetModules[moduleKey]) {
+    return assetModules[moduleKey];
+  }
+
+  return `${import.meta.env.BASE_URL}assets/${normalized}`;
+}
+
+export const getImageUrl = getAssetUrl;
 
 export function getInitials(name) {
   return name

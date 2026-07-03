@@ -1,71 +1,413 @@
-.grid {
+.featuredGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
+}
+
+.carouselSection {
+  margin-top: 1.5rem;
+}
+
+.carouselHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.carouselLabel {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-soft);
+}
+
+.carouselControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carouselBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.carouselBtn:hover:not(:disabled) {
+  color: var(--color-text);
+  border-color: rgba(232, 121, 249, 0.35);
+  background: rgba(232, 121, 249, 0.12);
+}
+
+.carouselBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.carouselTrack {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-block: 0.25rem 0.5rem;
+  margin-inline: calc(var(--container-padding) * -0.35);
+  padding-inline: calc(var(--container-padding) * 0.35);
+}
+
+.carouselTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselSlide {
+  flex: 0 0 min(88vw, 340px);
+  scroll-snap-align: start;
+  container-type: inline-size;
+}
+
+.carouselSlide .card {
+  height: 100%;
+}
+
+.carouselDots {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.carouselDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: none;
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.carouselDotActive {
+  width: 22px;
+  background: var(--color-accent-soft);
 }
 
 .card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.cardGlow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--color-gradient);
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card:hover .cardGlow,
+.card:focus-within .cardGlow {
+  opacity: 0.35;
+}
+
+.spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.card:hover .spotlight,
+.card:focus-within .spotlight {
+  opacity: 1;
+}
+
+.cardInner {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  border-radius: var(--radius-lg);
+  height: 100%;
+  border-radius: inherit;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease,
+    grid-template-columns 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.card:hover {
-  border-color: rgba(232, 121, 249, 0.35);
-  box-shadow: var(--shadow-md);
+.card:hover .cardInner,
+.card:focus-within .cardInner {
+  border-color: rgba(232, 121, 249, 0.32);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .imageWrap {
   position: relative;
+  flex: 0 0 auto;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  isolation: isolate;
 }
 
-.image {
+/* Carousel cards: expand preview vertically only (width stays fixed) */
+.carouselSlide .hasPreview .imageWrap {
+  aspect-ratio: unset;
+  width: 100%;
+  height: 56.25cqw;
+  flex: 0 0 auto;
+  transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.carouselSlide .hasPreview:hover .imageWrap,
+.carouselSlide .hasPreview.previewActive .imageWrap,
+.carouselSlide .hasPreview:focus-within .imageWrap {
+  height: 133cqw;
+}
+
+.carouselSlide .hasPreview .content {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.carouselSlide .hasPreview:hover .content,
+.carouselSlide .hasPreview.previewActive .content,
+.carouselSlide .hasPreview:focus-within .content {
+  flex: 1 1 auto;
+}
+
+.mediaLayer {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  display: block;
 }
 
-.card:hover .image {
-  transform: scale(1.05);
+.mediaImage {
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.mediaContain {
+  object-fit: contain;
+  padding: 1.75rem;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(232, 121, 249, 0.12), transparent 70%),
+    rgba(255, 255, 255, 0.02);
+}
+
+.mediaHidden {
+  opacity: 0;
+}
+
+.mediaVideo {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.mediaVideoVisible {
+  opacity: 1;
+}
+
+.card:hover .mediaLayer,
+.card:focus-within .mediaLayer {
+  transform: scale(1.07);
+}
+
+.hasPreview:hover .mediaLayer,
+.hasPreview.previewActive .mediaLayer,
+.hasPreview:focus-within .mediaLayer {
+  transform: none;
+}
+
+.hasPreview:hover .mediaVideoVisible,
+.hasPreview.previewActive .mediaVideoVisible,
+.hasPreview:focus-within .mediaVideoVisible {
+  object-fit: contain;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(232, 121, 249, 0.1), transparent 68%),
+    rgba(8, 4, 16, 0.94);
+}
+
+.hasPreview:hover .imageOverlay,
+.hasPreview.previewActive .imageOverlay,
+.hasPreview:focus-within .imageOverlay {
+  opacity: 0.35;
+}
+
+.previewHint {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 3;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(12, 6, 20, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  transition: opacity 0.25s ease;
+}
+
+.card:hover .previewHint,
+.card:focus-within .previewHint {
+  opacity: 0;
+}
+
+.linkBtnCompact {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.78rem;
 }
 
 .imageOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(7, 7, 13, 0.6), transparent 50%);
+  background:
+    linear-gradient(to top, rgba(12, 6, 20, 0.82) 0%, rgba(12, 6, 20, 0.2) 42%, transparent 72%),
+    linear-gradient(135deg, rgba(232, 121, 249, 0.08), rgba(129, 140, 248, 0.06));
   pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.card:hover .imageOverlay,
+.card:focus-within .imageOverlay {
+  opacity: 0.95;
+}
+
+.shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.09) 48%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.card:hover .shine,
+.card:focus-within .shine {
+  transform: translateX(120%);
 }
 
 .featuredBadge {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  z-index: 2;
-  padding: 0.35rem 0.75rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: white;
-  background: linear-gradient(135deg, rgba(244, 114, 182, 0.9), rgba(129, 140, 248, 0.85));
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.92), rgba(129, 140, 248, 0.88));
+  box-shadow: 0 8px 24px rgba(232, 121, 249, 0.28);
   backdrop-filter: blur(8px);
+}
+
+.hoverPanel {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1.25rem;
+  pointer-events: none;
+}
+
+.hoverActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  pointer-events: auto;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  padding: 1.5rem;
+  flex: 1 1 auto;
+  padding: 1.35rem 1.4rem 1.5rem;
   gap: 0.85rem;
+  transition:
+    padding 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    gap 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    flex 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hasPreview:hover .content,
+.hasPreview.previewActive .content,
+.hasPreview:focus-within .content {
+  flex: 0.75 1 auto;
+  padding: 0.95rem 1.2rem 1.1rem;
+  gap: 0.55rem;
+}
+
+.contentTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.index {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-soft);
+  padding-top: 0.2rem;
+  opacity: 0.75;
 }
 
 .title {
@@ -73,6 +415,15 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.35;
+  transition: color 0.25s ease;
+}
+
+.card:hover .title,
+.card:focus-within .title {
+  background: var(--color-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .description {
@@ -80,12 +431,29 @@
   color: var(--color-text-muted);
   line-height: 1.65;
   flex: 1;
+  overflow: hidden;
+  transition:
+    max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease,
+    margin 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hasPreview .description {
+  max-height: 9em;
+}
+
+.hasPreview:hover .description,
+.hasPreview.previewActive .description,
+.hasPreview:focus-within .description {
+  max-height: 0;
+  opacity: 0;
+  margin-block: -0.85rem 0;
 }
 
 .stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
   align-items: center;
 }
 
@@ -93,63 +461,249 @@
   list-style: none;
 }
 
+.stackPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.55rem 0.28rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.card:hover .stackPill,
+.card:focus-within .stackPill {
+  border-color: rgba(232, 121, 249, 0.22);
+  background: rgba(232, 121, 249, 0.08);
+}
+
+.card:hover .stack li:nth-child(1) .stackPill,
+.card:focus-within .stack li:nth-child(1) .stackPill {
+  transition-delay: 0.02s;
+}
+
+.card:hover .stack li:nth-child(2) .stackPill,
+.card:focus-within .stack li:nth-child(2) .stackPill {
+  transition-delay: 0.06s;
+}
+
+.card:hover .stack li:nth-child(3) .stackPill,
+.card:focus-within .stack li:nth-child(3) .stackPill {
+  transition-delay: 0.1s;
+}
+
+.card:hover .stack li:nth-child(4) .stackPill,
+.card:focus-within .stack li:nth-child(4) .stackPill {
+  transition-delay: 0.14s;
+}
+
+.card:hover .stackPill:hover,
+.card:focus-within .stackPill:hover {
+  transform: translateY(-2px);
+}
+
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  padding-top: 0.5rem;
+  gap: 0.65rem;
+  padding-top: 0.35rem;
 }
 
-.link {
+.linkBtn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.875rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--color-text);
-  transition: color 0.2s ease;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border-strong);
+  backdrop-filter: blur(6px);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.link:hover {
-  color: var(--color-accent-soft);
+.linkBtn:hover {
+  color: white;
+  border-color: rgba(232, 121, 249, 0.45);
+  background: rgba(232, 121, 249, 0.16);
+  box-shadow: 0 8px 24px rgba(232, 121, 249, 0.18);
+}
+
+.linkArrow {
+  opacity: 0.55;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.linkBtn:hover .linkArrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
 }
 
 .linkDisabled {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.875rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
   font-weight: 500;
   color: var(--color-text-subtle);
-  opacity: 0.6;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--color-border);
+  opacity: 0.55;
   cursor: default;
 }
 
+.featured .content {
+  padding: 1.75rem 2rem 2rem;
+}
+
+.featured .title {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+
+.featured .description {
+  font-size: 1rem;
+  max-width: 52ch;
+}
+
+.featured .index {
+  font-size: 0.8rem;
+}
+
 @media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .featuredGrid {
+    gap: 1.35rem;
   }
 
-  .featured {
-    grid-column: span 2;
-    flex-direction: row;
+  .carouselSlide {
+    flex-basis: calc((100% - 2.5rem) / 3);
+    max-width: 380px;
+  }
+
+  .featured .cardInner {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    min-height: 320px;
+  }
+
+  .featured.hasPreview:hover .cardInner,
+  .featured.hasPreview.previewActive .cardInner,
+  .featured.hasPreview:focus-within .cardInner {
+    grid-template-columns: 1.55fr 0.82fr;
   }
 
   .featured .imageWrap {
-    flex: 1;
     aspect-ratio: auto;
-    min-height: 280px;
+    min-height: 100%;
+  }
+
+  .featured.hasPreview:hover .imageWrap,
+  .featured.hasPreview.previewActive .imageWrap,
+  .featured.hasPreview:focus-within .imageWrap {
+    aspect-ratio: auto;
+    min-height: 100%;
+    flex: initial;
   }
 
   .featured .content {
-    flex: 1;
-    padding: 2rem;
     justify-content: center;
+  }
+
+  .featured .hoverPanel {
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 2rem;
+  }
+
+  .featured .hoverActions {
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 170px;
+  }
+
+  .carouselSlide .links {
+    display: flex;
+  }
+
+  .carouselSlide .hoverPanel {
+    display: none;
   }
 }
 
 @media (min-width: 1024px) {
-  .featured {
-    grid-column: span 2;
+  .carouselSlide {
+    flex-basis: calc((100% - 3.75rem) / 4);
+    max-width: none;
+  }
+
+  .featured .links {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .carouselSlide .hoverPanel {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardInner,
+  .imageWrap,
+  .content,
+  .description,
+  .mediaImage,
+  .shine,
+  .stackPill,
+  .linkBtn {
+    transition: none;
+  }
+
+  .card:hover .mediaImage,
+  .card:focus-within .mediaImage {
+    transform: none;
+  }
+
+  .carouselSlide .hasPreview:hover .imageWrap,
+  .carouselSlide .hasPreview.previewActive .imageWrap,
+  .carouselSlide .hasPreview:focus-within .imageWrap {
+    height: 56.25cqw;
+  }
+
+  .featured.hasPreview:hover .imageWrap,
+  .featured.hasPreview.previewActive .imageWrap,
+  .featured.hasPreview:focus-within .imageWrap {
+    aspect-ratio: auto;
+    min-height: 100%;
+    flex: initial;
+  }
+
+  .hasPreview:hover .description,
+  .hasPreview.previewActive .description,
+  .hasPreview:focus-within .description {
+    max-height: none;
+    opacity: 1;
+    margin-block: 0;
+  }
+
+  .hasPreview:hover .mediaVideoVisible,
+  .hasPreview.previewActive .mediaVideoVisible,
+  .hasPreview:focus-within .mediaVideoVisible {
+    object-fit: cover;
   }
 }

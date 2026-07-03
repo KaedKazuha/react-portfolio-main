@@ -1,0 +1,117 @@
+.cardSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.frame {
+  fill: rgba(255, 255, 255, 0.03);
+  stroke: rgba(232, 121, 249, 0.28);
+  stroke-width: 1.5;
+}
+
+.frameBar {
+  fill: rgba(232, 121, 249, 0.12);
+}
+
+.dot {
+  fill: rgba(244, 114, 182, 0.5);
+}
+
+.bar {
+  fill: rgba(240, 171, 252, 0.75);
+}
+
+.barMuted {
+  fill: rgba(255, 255, 255, 0.12);
+}
+
+.barAccent {
+  fill: rgba(167, 139, 250, 0.65);
+}
+
+.panel {
+  fill: rgba(129, 140, 248, 0.12);
+  stroke: rgba(129, 140, 248, 0.25);
+  stroke-width: 1;
+}
+
+.chart {
+  fill: rgba(244, 114, 182, 0.35);
+}
+
+.pingRing {
+  fill: none;
+  stroke: rgba(244, 114, 182, 0.45);
+  stroke-width: 1.5;
+  animation: pingExpand 2s ease-out infinite;
+}
+
+.pingRingSlow {
+  fill: none;
+  stroke: rgba(129, 140, 248, 0.35);
+  stroke-width: 1;
+  animation: pingExpand 2.8s ease-out infinite;
+}
+
+@keyframes pingExpand {
+  0% { r: 6; opacity: 0.8; }
+  100% { r: 18; opacity: 0; }
+}
+
+.pingCore {
+  fill: #f472b6;
+}
+
+.routeLine {
+  fill: none;
+  stroke: rgba(232, 121, 249, 0.5);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.routeDot {
+  fill: #a78bfa;
+}
+
+.hubDot {
+  fill: #e879f9;
+}
+
+.nodeDot {
+  fill: rgba(240, 171, 252, 0.8);
+  animation: dotBlink 2.4s ease-in-out infinite;
+}
+
+.nodeDot:nth-of-type(3) { animation-delay: -0.6s; }
+.nodeDot:nth-of-type(4) { animation-delay: -1.2s; }
+.nodeDot:nth-of-type(5) { animation-delay: -1.8s; }
+
+@keyframes dotBlink {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.linkLine {
+  stroke: rgba(232, 121, 249, 0.35);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 6;
+  animation: flowDash 2s linear infinite;
+}
+
+.spark {
+  fill: none;
+  stroke: #818cf8;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pingRing,
+  .pingRingSlow,
+  .nodeDot,
+  .linkLine {
+    animation: none;
+  }
+}

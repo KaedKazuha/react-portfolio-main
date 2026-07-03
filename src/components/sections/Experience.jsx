@@ -66,7 +66,21 @@ function TimelineItem({ item, index }) {
           <div>
             <h3 className={styles.role}>
               {item.role}
-              <span className={styles.org}> @ {item.company}</span>
+              <span className={styles.org}>
+                {" @ "}
+                {item.websiteUrl ? (
+                  <a
+                    href={item.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.companyLink}
+                  >
+                    {item.company}
+                  </a>
+                ) : (
+                  item.company
+                )}
+              </span>
             </h3>
             <div className={styles.meta}>
               <time className={styles.dates}>

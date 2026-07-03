@@ -8,8 +8,6 @@ import { Button } from "../ui/Button";
 
 import { ScrollBeacon } from "../ui/ScrollBeacon";
 
-import { Avatar } from "../ui/Avatar";
-
 import { HeroFlourishes } from "./HeroFlourishes";
 import { HeroPetals } from "./HeroPetals";
 
@@ -31,7 +29,7 @@ export function Hero() {
       <HeroFlourishes />
       <HeroPetals />
 
-      <div className={`container ${styles.grid}`}>
+      <div className={`container ${styles.heroContent}`}>
         <motion.div
           className={styles.content}
           initial={{ opacity: 0, y: 40 }}
@@ -97,30 +95,24 @@ export function Hero() {
             })}
           </motion.ul>
         </motion.div>
-
-        <motion.div
-          className={styles.visual}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className={styles.imageGlow} />
-
-          <motion.div
-            className={styles.imageFrame}
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Avatar
-              name={name}
-              imageSrc={heroImage}
-              size="lg"
-              className={styles.avatar}
-            />
-          </motion.div>
-          <div className={styles.orbit} aria-hidden="true" />
-        </motion.div>
       </div>
+
+      {heroImage && (
+        <motion.div
+          className={styles.portrait}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.div
+            className={styles.portraitFloat}
+            animate={{ y: [0, -14, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <img src={heroImage} alt={name} className={styles.portraitPhoto} />
+          </motion.div>
+        </motion.div>
+      )}
 
       <ScrollBeacon href="#about" />
     </section>

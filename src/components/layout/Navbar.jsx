@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { site } from "../../content";
 import { useActiveSection } from "../../hooks/useActiveSection";
@@ -8,16 +8,24 @@ import styles from "./Navbar.module.css";
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { name, email, nav } = site;
   const sectionIds = nav.map((link) => link.id);
   const activeSection = useActiveSection(sectionIds);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleNavClick = () => setMenuOpen(false);
 
   return (
     <>
       <motion.header
-        className={styles.header}
+        className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

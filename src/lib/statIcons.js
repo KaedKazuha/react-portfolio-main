@@ -1,8 +1,9 @@
-import { Briefcase, FolderKanban, Sparkles } from "lucide-react";
+import { Briefcase, FolderKanban, Smartphone, Sparkles } from "lucide-react";
 
 const STAT_ICON_MAP = {
   calendar: Briefcase,
   projects: FolderKanban,
+  mobile: Smartphone,
   tech: Sparkles,
 };
 

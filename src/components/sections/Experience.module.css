@@ -59,6 +59,19 @@
   color: var(--color-text-muted);
 }
 
+.companyLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(232, 121, 249, 0.35);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.companyLink:hover {
+  color: var(--color-accent-soft);
+  text-decoration-color: var(--color-accent-soft);
+}
+
 .meta {
   display: flex;
   flex-wrap: wrap;
