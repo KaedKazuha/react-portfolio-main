@@ -1,5 +1,6 @@
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, Github, Play, Sparkles, X } from "lucide-react";
 import { site, projects } from "../../content";
 import { getSkillIconPath } from "../../lib/skillIcons";
@@ -170,34 +171,33 @@ function ProjectsCarousel({ projects, startIndex }) {
   );
 }
 
-function ProjectMedia({ title, imagePath, videoPath, imageFit, playing }) {
-  const videoRef = useRef(null);
+function ProjectMedia({ title, imagePath, videoPath, imageFit, playing, videoRef, mobile = false }) {
+  const fallbackRef = useRef(null);
+  const ref = videoRef ?? fallbackRef;
   const imageUrl = getAssetUrl(imagePath);
   const videoUrl = getAssetUrl(videoPath);
 
   useEffect(() => {
-    const video = videoRef.current;
+    const video = ref.current;
     if (!video || !videoUrl) return;
 
-    if (playing) {
-      if (video.src !== videoUrl) {
-        video.src = videoUrl;
-      }
-      if (video.readyState < 2) {
-        video.load();
-      }
-      const playPromise = video.play();
-      if (playPromise) {
-        playPromise.catch(() => {});
-      }
+    if (!playing) {
+      video.pause();
+      video.currentTime = 0;
+      video.controls = false;
+      video.removeAttribute("src");
+      video.load();
       return;
     }
 
-    video.pause();
-    video.currentTime = 0;
-    video.removeAttribute("src");
-    video.load();
-  }, [playing, videoUrl]);
+    if (mobile) return;
+
+    video.src = videoUrl;
+    const playPromise = video.play();
+    if (playPromise) {
+      playPromise.catch(() => {});
+    }
+  }, [playing, mobile, ref, videoUrl]);
 
   if (!imageUrl && !videoUrl) {
     return <PlaceholderImage title={title} imagePath={imagePath} className={styles.mediaLayer} />;
@@ -216,12 +216,13 @@ function ProjectMedia({ title, imagePath, videoPath, imageFit, playing }) {
       )}
       {videoUrl && (
         <video
-          ref={videoRef}
+          ref={ref}
+          src={playing ? videoUrl : undefined}
           className={`${styles.mediaLayer} ${styles.mediaVideo} ${playing ? styles.mediaVideoVisible : ""}`}
           muted
           loop
           playsInline
-          preload="none"
+          preload={playing ? "auto" : "none"}
           aria-hidden="true"
         />
       )}
@@ -295,10 +296,12 @@ function ProjectLink({ href, icon: Icon, label, disabled = false, compact = fals
 
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
+  const videoRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const { liteMode, mobile } = useMobileProfile();
+  const previewVideoUrl = getAssetUrl(project.previewVideo);
 
   const pointerX = useMotionValue(0.5);
   const pointerY = useMotionValue(0.5);
@@ -343,9 +346,39 @@ function ProjectCard({ project, index }) {
   const previewActive = canHoverPreview ? hovered : previewOpen && hasPreview;
   const previewPlaying = previewActive && hasPreview;
 
-  const handlePreviewToggle = () => {
-    if (mobile && hasPreview) {
-      setPreviewOpen((open) => !open);
+  const handlePreviewToggle = async () => {
+    if (!mobile || !hasPreview) return;
+
+    if (previewOpen) {
+      const video = videoRef.current;
+      video?.pause();
+      if (video) {
+        video.currentTime = 0;
+        video.controls = false;
+        video.removeAttribute("src");
+        video.load();
+      }
+      setPreviewOpen(false);
+      return;
+    }
+
+    const video = videoRef.current;
+    if (!video || !previewVideoUrl) {
+      setPreviewOpen(true);
+      return;
+    }
+
+    flushSync(() => setPreviewOpen(true));
+
+    video.src = previewVideoUrl;
+    video.muted = true;
+    video.playsInline = true;
+    video.controls = false;
+
+    try {
+      await video.play();
+    } catch {
+      video.controls = true;
     }
   };
 
@@ -380,6 +413,8 @@ function ProjectCard({ project, index }) {
             videoPath={project.previewVideo}
             imageFit={project.imageFit}
             playing={previewPlaying}
+            videoRef={videoRef}
+            mobile={mobile}
           />
           <div className={styles.imageOverlay} aria-hidden="true" />
           <div className={styles.shine} aria-hidden="true" />
