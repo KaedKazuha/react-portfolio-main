@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { InteractiveEmbroidery } from "./components/effects/InteractiveEmbroidery";
+import { useMobileProfile } from "./hooks/useMobileProfile";
 import { Navbar } from "./components/layout/Navbar";
 import { Hero } from "./components/sections/Hero";
 import { About } from "./components/sections/About";
@@ -12,9 +13,10 @@ import styles from "./App.module.css";
 
 function App() {
   const pageRef = useRef(null);
+  const { liteMode } = useMobileProfile();
 
   return (
-    <div ref={pageRef} className={styles.page}>
+    <div ref={pageRef} className={styles.page} data-lite={liteMode ? "" : undefined}>
       <PageScrollProgress />
       <div className={styles.content}>
         <Navbar />

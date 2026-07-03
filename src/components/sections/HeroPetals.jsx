@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import { drawPetal } from "../effects/embroideryCanvas";
+import { isLiteMode } from "../../hooks/useMobileProfile";
 
 import styles from "./Hero.module.css";
 
@@ -17,7 +18,7 @@ export function HeroPetals() {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return undefined;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    if (isLiteMode()) return undefined;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;

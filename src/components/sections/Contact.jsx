@@ -151,7 +151,6 @@ export function Contact() {
           <p>
             &copy; {new Date().getFullYear()} {name}. All rights reserved.
           </p>
-          <p className={styles.madeWith}>Built with React & Framer Motion</p>
         </motion.div>
       </motion.div>
     </SectionFrame>

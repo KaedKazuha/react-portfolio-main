@@ -112,7 +112,15 @@
   position: relative;
   border-radius: var(--radius-lg);
   transform-style: preserve-3d;
-  will-change: transform;
+}
+
+.liteCard {
+  transform-style: flat;
+}
+
+.liteCard .cardGlow,
+.liteCard .shine {
+  display: none;
 }
 
 .cardGlow {
@@ -659,6 +667,21 @@
   .carouselSlide .hoverPanel {
     display: none;
   }
+
+  .featuredBadge,
+  .previewHint,
+  .linkBtn {
+    backdrop-filter: none;
+  }
+
+  .card:hover .cardGlow,
+  .card:focus-within .cardGlow {
+    opacity: 0;
+  }
+}
+
+[data-lite] .card {
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

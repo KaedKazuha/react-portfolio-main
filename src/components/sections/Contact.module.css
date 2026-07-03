@@ -122,11 +122,6 @@
   color: var(--color-text-subtle);
 }
 
-.madeWith {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
 @media (min-width: 768px) {
   .inner {
     grid-template-columns: 1fr 1fr;

@@ -28,7 +28,10 @@
   position: relative;
   width: 100%;
   display: block;
-  will-change: transform;
+}
+
+.liteRoot .physicsWrap {
+  will-change: auto;
 }
 
 .pivotLeft {

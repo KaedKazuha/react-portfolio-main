@@ -9,6 +9,7 @@ import { PlaceholderImage } from "../ui/PlaceholderImage";
 import { SkillIcon } from "../ui/SkillIcon";
 import { getAssetUrl } from "../../utils";
 import { defaultViewport, fadeUp, staggerContainer } from "../../lib/motion";
+import { useMobileProfile } from "../../hooks/useMobileProfile";
 import styles from "./Projects.module.css";
 
 export function Projects() {
@@ -169,7 +170,7 @@ function ProjectsCarousel({ projects, startIndex }) {
   );
 }
 
-function ProjectMedia({ title, imagePath, videoPath, imageFit, hovered }) {
+function ProjectMedia({ title, imagePath, videoPath, imageFit, playing }) {
   const videoRef = useRef(null);
   const imageUrl = getAssetUrl(imagePath);
   const videoUrl = getAssetUrl(videoPath);
@@ -178,7 +179,10 @@ function ProjectMedia({ title, imagePath, videoPath, imageFit, hovered }) {
     const video = videoRef.current;
     if (!video || !videoUrl) return;
 
-    if (hovered) {
+    if (playing) {
+      if (video.src !== videoUrl) {
+        video.src = videoUrl;
+      }
       if (video.readyState < 2) {
         video.load();
       }
@@ -191,7 +195,9 @@ function ProjectMedia({ title, imagePath, videoPath, imageFit, hovered }) {
 
     video.pause();
     video.currentTime = 0;
-  }, [hovered, videoUrl]);
+    video.removeAttribute("src");
+    video.load();
+  }, [playing, videoUrl]);
 
   if (!imageUrl && !videoUrl) {
     return <PlaceholderImage title={title} imagePath={imagePath} className={styles.mediaLayer} />;
@@ -203,19 +209,19 @@ function ProjectMedia({ title, imagePath, videoPath, imageFit, hovered }) {
         <img
           src={imageUrl}
           alt={title}
-          className={`${styles.mediaLayer} ${styles.mediaImage} ${imageFit === "contain" ? styles.mediaContain : ""} ${hovered && videoUrl ? styles.mediaHidden : ""}`}
+          className={`${styles.mediaLayer} ${styles.mediaImage} ${imageFit === "contain" ? styles.mediaContain : ""} ${playing && videoUrl ? styles.mediaHidden : ""}`}
           loading="lazy"
+          decoding="async"
         />
       )}
       {videoUrl && (
         <video
           ref={videoRef}
-          src={videoUrl}
-          className={`${styles.mediaLayer} ${styles.mediaVideo} ${hovered ? styles.mediaVideoVisible : ""}`}
+          className={`${styles.mediaLayer} ${styles.mediaVideo} ${playing ? styles.mediaVideoVisible : ""}`}
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           aria-hidden="true"
         />
       )}
@@ -290,7 +296,9 @@ function ProjectLink({ href, icon: Icon, label, disabled = false, compact = fals
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
   const [hovered, setHovered] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { liteMode, mobile } = useMobileProfile();
 
   const pointerX = useMotionValue(0.5);
   const pointerY = useMotionValue(0.5);
@@ -309,7 +317,7 @@ function ProjectCard({ project, index }) {
   const spotlight = useMotionTemplate`radial-gradient(420px circle at ${spotlightX}% ${spotlightY}%, rgba(232, 121, 249, 0.16), transparent 68%)`;
 
   const handlePointerMove = (event) => {
-    if (reduceMotion || !cardRef.current) return;
+    if (reduceMotion || liteMode || !cardRef.current) return;
 
     const rect = cardRef.current.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width;
@@ -331,15 +339,23 @@ function ProjectCard({ project, index }) {
 
   const cardNumber = String(index + 1).padStart(2, "0");
   const hasPreview = Boolean(project.previewVideo);
-  const previewActive = hovered && hasPreview;
+  const canHoverPreview = hasPreview && !liteMode;
+  const previewActive = canHoverPreview ? hovered : previewOpen && hasPreview;
+  const previewPlaying = previewActive && hasPreview;
+
+  const handlePreviewToggle = () => {
+    if (mobile && hasPreview) {
+      setPreviewOpen((open) => !open);
+    }
+  };
 
   return (
     <motion.article
       ref={cardRef}
-      className={`${styles.card} ${project.featured ? styles.featured : ""} ${hasPreview ? styles.hasPreview : ""} ${previewActive ? styles.previewActive : ""}`}
+      className={`${styles.card} ${project.featured ? styles.featured : ""} ${hasPreview ? styles.hasPreview : ""} ${previewActive ? styles.previewActive : ""}${liteMode ? ` ${styles.liteCard}` : ""}`}
       variants={fadeUp}
       style={
-        reduceMotion
+        reduceMotion || liteMode
           ? undefined
           : {
               rotateX,
@@ -347,23 +363,38 @@ function ProjectCard({ project, index }) {
               transformPerspective: 1200,
             }
       }
-      onPointerMove={handlePointerMove}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={resetPointer}
+      onPointerMove={liteMode ? undefined : handlePointerMove}
+      onPointerEnter={liteMode ? undefined : () => setHovered(true)}
+      onPointerLeave={liteMode ? undefined : resetPointer}
     >
       <div className={styles.cardGlow} aria-hidden="true" />
-      {!reduceMotion && (
+      {!reduceMotion && !liteMode && (
         <motion.div className={styles.spotlight} style={{ background: spotlight }} aria-hidden="true" />
       )}
 
       <div className={styles.cardInner}>
-        <div className={styles.imageWrap}>
+        <div
+          className={styles.imageWrap}
+          onClick={mobile && hasPreview ? handlePreviewToggle : undefined}
+          onKeyDown={
+            mobile && hasPreview
+              ? (event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    handlePreviewToggle();
+                  }
+                }
+              : undefined
+          }
+          role={mobile && hasPreview ? "button" : undefined}
+          tabIndex={mobile && hasPreview ? 0 : undefined}
+        >
           <ProjectMedia
             title={project.title}
             imagePath={project.image}
             videoPath={project.previewVideo}
             imageFit={project.imageFit}
-            hovered={hovered}
+            playing={previewPlaying}
           />
           <div className={styles.imageOverlay} aria-hidden="true" />
           <div className={styles.shine} aria-hidden="true" />
@@ -377,7 +408,7 @@ function ProjectCard({ project, index }) {
 
           {project.previewVideo && (
             <span className={styles.previewHint} aria-hidden="true">
-              Hover to preview
+              {mobile ? (previewOpen ? "Tap to close" : "Tap to preview") : "Hover to preview"}
             </span>
           )}
 

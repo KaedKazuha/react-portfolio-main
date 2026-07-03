@@ -27,11 +27,10 @@ const MotifMount = forwardRef(function MotifMount(
   );
 });
 
-function FlourishBloom({ bloom, enlarged }) {
-  const scale = enlarged ? 1.5 : 1;
+function FlourishBloom({ bloom, enlarged, liteMode = false }) {
+  const scale = enlarged && !liteMode ? 1.5 : 1;
   const petalClass = bloom.interactive ? styles.flourishPetalInteractive : styles.flourishPetal;
 
-  // pendulum physics — each flower gently nods on its stalk with a unique rhythm
   const amp = enlarged ? 1.5 : 3 + (bloom.seed % 4);
   const dur = 3 + (bloom.seed % 5) * 0.45;
   const delay = (bloom.seed % 7) * 0.35;
@@ -48,12 +47,8 @@ function FlourishBloom({ bloom, enlarged }) {
       </g>
     );
   } else if (bloom.kind === "bell") {
-    head = (
-      <motion.g
-        animate={{ scale }}
-        transition={{ type: "spring", stiffness: 320, damping: 20 }}
-        transform={offset}
-      >
+    const bellGroup = (
+      <>
         {bloom.bells.map((b, i) => (
           <ellipse
             key={i}
@@ -65,15 +60,23 @@ function FlourishBloom({ bloom, enlarged }) {
             className={petalClass}
           />
         ))}
-      </motion.g>
+      </>
     );
-  } else {
-    head = (
+
+    head = liteMode ? (
+      <g transform={offset}>{bellGroup}</g>
+    ) : (
       <motion.g
         animate={{ scale }}
         transition={{ type: "spring", stiffness: 320, damping: 20 }}
-        transform={`${offset} rotate(${bloom.rotation})`}
+        transform={offset}
       >
+        {bellGroup}
+      </motion.g>
+    );
+  } else {
+    const petalGroup = (
+      <>
         {bloom.petals.map((petal) => (
           <ellipse
             key={petal.rotate}
@@ -86,7 +89,27 @@ function FlourishBloom({ bloom, enlarged }) {
           />
         ))}
         <circle cx="0" cy="0" r={bloom.center} className={styles.flourishBloomCenter} />
+      </>
+    );
+
+    head = liteMode ? (
+      <g transform={`${offset} rotate(${bloom.rotation})`}>{petalGroup}</g>
+    ) : (
+      <motion.g
+        animate={{ scale }}
+        transition={{ type: "spring", stiffness: 320, damping: 20 }}
+        transform={`${offset} rotate(${bloom.rotation})`}
+      >
+        {petalGroup}
       </motion.g>
+    );
+  }
+
+  if (liteMode) {
+    return (
+      <g transform={`translate(${bloom.baseX} ${bloom.baseY})`}>
+        {head}
+      </g>
     );
   }
 
@@ -102,7 +125,7 @@ function FlourishBloom({ bloom, enlarged }) {
   );
 }
 
-export function FlourishBranch({ branch, hovered, children }) {
+export function FlourishBranch({ branch, hovered, liteMode = false, children }) {
   return (
     <>
       {branch.rootAnchor && <path d={branch.rootAnchor} className={styles.rootAnchor} />}
@@ -123,7 +146,12 @@ export function FlourishBranch({ branch, hovered, children }) {
         <path key={twig.path} d={twig.path} className={styles.flourishTwig} />
       ))}
       {branch.blooms.map((bloom) => (
-        <FlourishBloom key={`${bloom.cx}-${bloom.cy}`} bloom={bloom} enlarged={hovered} />
+        <FlourishBloom
+          key={`${bloom.cx}-${bloom.cy}`}
+          bloom={bloom}
+          enlarged={hovered}
+          liteMode={liteMode}
+        />
       ))}
       {children}
     </>
@@ -142,7 +170,7 @@ const HIT_AREAS = {
   maple: <rect x="0" y="0" width="325" height="245" className={styles.hitArea} />,
 };
 
-function BranchMotif({ id, side, top, onActivate, active, disconnected }) {
+function BranchMotif({ id, side, top, onActivate, active, disconnected, liteMode = false }) {
   const branch = side === "left" ? LEFT_BRANCHES[id] : RIGHT_BRANCHES[id];
   const viewBox = BRANCH_VIEWBOX[id];
   const hitArea = HIT_AREAS[id];
@@ -167,7 +195,11 @@ function BranchMotif({ id, side, top, onActivate, active, disconnected }) {
     >
       <motion.div
         className={styles.physicsWrap}
-        style={disconnected ? { transformOrigin } : { rotate: bend.rotate, transformOrigin }}
+        style={
+          disconnected || liteMode
+            ? { transformOrigin }
+            : { rotate: bend.rotate, transformOrigin }
+        }
       >
         <svg
           data-motif-id={id}
@@ -175,14 +207,14 @@ function BranchMotif({ id, side, top, onActivate, active, disconnected }) {
           viewBox={viewBox}
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          onMouseEnter={() => !disconnected && onActivate(id, "enter")}
-          onMouseLeave={() => !disconnected && onActivate(id, "leave")}
-          onClick={() => !disconnected && onActivate(id, "click")}
+          onMouseEnter={() => !disconnected && !liteMode && onActivate(id, "enter")}
+          onMouseLeave={() => !disconnected && !liteMode && onActivate(id, "leave")}
+          onClick={() => !disconnected && !liteMode && onActivate(id, "click")}
           role={isInteractive ? "img" : undefined}
           aria-label={isInteractive ? "Interactive flourish — click to snip thread" : undefined}
           aria-hidden={isInteractive ? undefined : "true"}
         >
-          <FlourishBranch branch={branch} hovered={active && !disconnected}>
+          <FlourishBranch branch={branch} hovered={active && !disconnected} liteMode={liteMode}>
             {hitArea}
           </FlourishBranch>
         </svg>
@@ -191,7 +223,7 @@ function BranchMotif({ id, side, top, onActivate, active, disconnected }) {
   );
 }
 
-export function EmbroideryMotifs({ layout, onActivate, activeMotif, disconnectedMotifs = new Set() }) {
+export function EmbroideryMotifs({ layout, onActivate, activeMotif, disconnectedMotifs = new Set(), liteMode = false }) {
   if (!layout) return null;
 
   const renderSlot = (slot, side) => (
@@ -203,6 +235,7 @@ export function EmbroideryMotifs({ layout, onActivate, activeMotif, disconnected
       onActivate={onActivate}
       active={activeMotif === slot.key}
       disconnected={disconnectedMotifs.has(slot.key)}
+      liteMode={liteMode}
     />
   );
 

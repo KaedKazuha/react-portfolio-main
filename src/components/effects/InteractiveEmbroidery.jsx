@@ -8,6 +8,7 @@ import {
   drawPakistaniEmbroidery,
   syncPakistaniEmbroidery,
 } from "./pakistaniEmbroidery";
+import { isLiteMode, useMobileProfile } from "../../hooks/useMobileProfile";
 import styles from "./InteractiveEmbroidery.module.css";
 
 const MOTIF_SIDES = {
@@ -21,6 +22,7 @@ const MOTIF_SIDES = {
 };
 
 export function InteractiveEmbroidery({ pageRef }) {
+  const { liteMode } = useMobileProfile();
   const rootRef = useRef(null);
   const canvasRef = useRef(null);
   const burstRef = useRef([]);
@@ -100,6 +102,7 @@ export function InteractiveEmbroidery({ pageRef }) {
     const canvas = canvasRef.current;
     const root = rootRef.current;
     if (!canvas || !root) return undefined;
+    if (isLiteMode()) return undefined;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return undefined;
@@ -123,7 +126,7 @@ export function InteractiveEmbroidery({ pageRef }) {
     };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, isLiteMode() ? 1 : 2);
       const { width, height } = getSize();
 
       canvas.width = width * dpr;
@@ -191,15 +194,18 @@ export function InteractiveEmbroidery({ pageRef }) {
     };
   }, [pageRef]);
 
+  const lite = liteMode;
+
   return (
-    <div ref={rootRef} className={styles.root} aria-hidden="true">
-      <canvas ref={canvasRef} className={styles.canvas} />
+    <div ref={rootRef} className={`${styles.root}${lite ? ` ${styles.liteRoot}` : ""}`} aria-hidden="true">
+      {!lite && <canvas ref={canvasRef} className={styles.canvas} />}
       {motifLayout && (
         <EmbroideryMotifs
           layout={motifLayout}
           onActivate={handleActivate}
           activeMotif={activeMotif}
           disconnectedMotifs={disconnectedMotifs}
+          liteMode={lite}
         />
       )}
     </div>

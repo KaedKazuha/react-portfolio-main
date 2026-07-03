@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Download, Mail, MapPin } from "lucide-react";
 import { site } from "../../content";
 import { getStatIcon } from "../../lib/statIcons";
+import { useMobileProfile } from "../../hooks/useMobileProfile";
 
 import { Button } from "../ui/Button";
 
@@ -17,6 +18,7 @@ import styles from "./Hero.module.css";
 
 export function Hero() {
   const { name, role, headline, status, location, email, cvUrl, stats, assets } = site;
+  const { liteMode } = useMobileProfile();
 
   const heroImage = assets?.heroImage ? getImageUrl(assets.heroImage) : null;
 
@@ -26,8 +28,8 @@ export function Hero() {
     <section className={styles.hero}>
       <div className={styles.heroGlow} aria-hidden="true" />
 
-      <HeroFlourishes />
-      <HeroPetals />
+      {!liteMode && <HeroFlourishes />}
+      {!liteMode && <HeroPetals />}
 
       <div className={`container ${styles.heroContent}`}>
         <motion.div
@@ -106,10 +108,16 @@ export function Hero() {
         >
           <motion.div
             className={styles.portraitFloat}
-            animate={{ y: [0, -14, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            animate={liteMode ? undefined : { y: [0, -14, 0] }}
+            transition={liteMode ? undefined : { duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img src={heroImage} alt={name} className={styles.portraitPhoto} />
+            <img
+              src={heroImage}
+              alt={name}
+              className={styles.portraitPhoto}
+              loading="lazy"
+              decoding="async"
+            />
           </motion.div>
         </motion.div>
       )}

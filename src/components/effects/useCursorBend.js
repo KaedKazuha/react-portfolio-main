@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSpring } from "framer-motion";
+import { isLiteMode } from "../../hooks/useMobileProfile";
 
 /**
  * Cursor-driven "bend" physics for a branch/flourish.
@@ -24,7 +25,7 @@ export function useCursorBend(
   useEffect(() => {
     const el = mountRef.current;
     if (!el) return undefined;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    if (isLiteMode()) return undefined;
 
     const s = state.current;
     const rest = () => rotate.set(0);
