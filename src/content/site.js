@@ -78,7 +78,7 @@ export const site = {
       label: "Projects",
       title: "Selected work",
       description:
-        "SaaS platforms, mobile apps, and shipped products — hover cards with a preview to watch them in action.",
+        "SaaS platforms, mobile apps, and shipped products — use Watch demo on mobile or hover previews on desktop.",
     },
     contact: {
       label: "Contact",

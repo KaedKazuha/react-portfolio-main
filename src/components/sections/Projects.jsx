@@ -1,6 +1,6 @@
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, Github, Sparkles } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, Github, Play, Sparkles, X } from "lucide-react";
 import { site, projects } from "../../content";
 import { getSkillIconPath } from "../../lib/skillIcons";
 import { SectionHeader } from "../ui/SectionHeader";
@@ -373,22 +373,7 @@ function ProjectCard({ project, index }) {
       )}
 
       <div className={styles.cardInner}>
-        <div
-          className={styles.imageWrap}
-          onClick={mobile && hasPreview ? handlePreviewToggle : undefined}
-          onKeyDown={
-            mobile && hasPreview
-              ? (event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    handlePreviewToggle();
-                  }
-                }
-              : undefined
-          }
-          role={mobile && hasPreview ? "button" : undefined}
-          tabIndex={mobile && hasPreview ? 0 : undefined}
-        >
+        <div className={styles.imageWrap}>
           <ProjectMedia
             title={project.title}
             imagePath={project.image}
@@ -406,9 +391,9 @@ function ProjectCard({ project, index }) {
             </span>
           )}
 
-          {project.previewVideo && (
+          {project.previewVideo && !mobile && (
             <span className={styles.previewHint} aria-hidden="true">
-              {mobile ? (previewOpen ? "Tap to close" : "Tap to preview") : "Hover to preview"}
+              Hover to preview
             </span>
           )}
 
@@ -453,6 +438,26 @@ function ProjectCard({ project, index }) {
           </ul>
 
           <div className={styles.links}>
+            {mobile && hasPreview && (
+              <button
+                type="button"
+                className={`${styles.previewBtn}${previewOpen ? ` ${styles.previewBtnActive}` : ""}`}
+                onClick={handlePreviewToggle}
+                aria-pressed={previewOpen}
+              >
+                {previewOpen ? (
+                  <>
+                    <X size={17} strokeWidth={2.25} />
+                    Close demo
+                  </>
+                ) : (
+                  <>
+                    <Play size={17} strokeWidth={2.25} />
+                    Watch demo
+                  </>
+                )}
+              </button>
+            )}
             <ProjectLinks project={project} />
           </div>
         </div>

@@ -524,6 +524,79 @@
   padding-top: 0.35rem;
 }
 
+.liteCard .links {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.liteCard .linkBtn {
+  justify-content: center;
+  min-height: 44px;
+}
+
+.previewBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.92), rgba(129, 140, 248, 0.88));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 24px rgba(232, 121, 249, 0.22);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.previewBtn:active {
+  transform: scale(0.98);
+}
+
+.previewBtnActive {
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-border-strong);
+  box-shadow: none;
+}
+
+.liteCard.hasPreview.previewActive .imageWrap {
+  height: 56.25cqw;
+  flex: 0 0 auto;
+}
+
+.liteCard.hasPreview.previewActive .description {
+  max-height: 9em;
+  opacity: 1;
+  margin-block: 0;
+}
+
+.liteCard.hasPreview.previewActive .content {
+  flex: 1 1 auto;
+  padding: 1.35rem 1.4rem 1.5rem;
+  gap: 0.85rem;
+}
+
+.featured.liteCard.hasPreview.previewActive .cardInner {
+  grid-template-columns: 1fr;
+}
+
+.featured.liteCard.hasPreview.previewActive .imageWrap {
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+}
+
+.liteCard.hasPreview.previewActive .mediaVideoVisible {
+  object-fit: contain;
+  background: rgba(8, 4, 16, 0.94);
+}
+
 .linkBtn {
   display: inline-flex;
   align-items: center;
@@ -672,6 +745,10 @@
   .previewHint,
   .linkBtn {
     backdrop-filter: none;
+  }
+
+  .previewBtn {
+    display: inline-flex;
   }
 
   .card:hover .cardGlow,
